@@ -149,19 +149,21 @@ export function Sidebar({
       >
         <button
           onClick={onToggleCollapse}
-          style={{
-            color: isDark ? '#d1d5db' : '#4b5563',
-          }}
-          className="p-2 rounded-lg mb-4 hover:bg-gray-700 hover:text-white"
+          className={clsx(
+            "p-2 rounded-lg mb-4 transition-colors",
+            isDark ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+          )}
+          title="展开侧边栏"
         >
           <Menu className="w-5 h-5" />
         </button>
         <button
           onClick={onNewArticle}
-          style={{
-            color: isDark ? '#d1d5db' : '#4b5563',
-          }}
-          className="p-2 rounded-lg hover:bg-gray-700 hover:text-white"
+          className={clsx(
+            "p-2 rounded-lg transition-colors",
+            isDark ? "text-gray-300 hover:bg-gray-700 hover:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+          )}
+          title="新建文章"
         >
           <Plus className="w-5 h-5" />
         </button>
@@ -171,7 +173,7 @@ export function Sidebar({
 
   return (
     <div className={clsx(
-      "flex flex-col h-full transition-all duration-300",
+      "flex flex-col h-full transition-[width] duration-300",
       "md:border-r",
       isDark ? "bg-[#2d2d2d] md:border-gray-700" : "bg-white md:border-gray-200"
     )} style={{ width }}>
@@ -222,7 +224,7 @@ export function Sidebar({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={clsx(
-              "w-full pl-10 pr-4 py-2 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2",
+              "w-full pl-10 pr-4 py-2 rounded-lg border transition-shadow duration-200 focus:outline-none focus:ring-2",
               isDark
                 ? "bg-[#252525] border-gray-700 text-white placeholder-gray-500 focus:border-[#07c160] focus:ring-[#07c160]/20"
                 : "bg-white border-gray-300 text-gray-800 placeholder-gray-400 focus:border-[#07c160] focus:ring-[#07c160]/20"
@@ -252,7 +254,7 @@ export function Sidebar({
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(article, e)}
                 className={clsx(
-                  "relative p-4 rounded-xl cursor-pointer transition-all duration-200 group",
+                  "relative p-4 rounded-xl cursor-pointer transition-opacity duration-200 group",
                   currentArticleId === article.id
                     ? (isDark ? "bg-[#3c3c3c] border-2 border-[#07c160]" : "bg-[rgb(232_247_239)] border-2 border-[#07c160]")
                     : (isDark ? "bg-[#252525] border-2 border-transparent hover:bg-[#3c3c3c]" : "bg-[rgb(249_250_251)] border-2 border-transparent hover:bg-[rgb(232_247_239)]"),
@@ -326,7 +328,7 @@ export function Sidebar({
                       <button
                         onClick={(e) => handleMenuToggle(article.id, e)}
                         className={clsx(
-                          "p-2 rounded-lg transition-all duration-200 mt-0.5",
+                          "p-2 rounded-lg mt-0.5",
                           isDark ? "text-gray-400 hover:bg-gray-700 hover:text-white" : "text-gray-400 hover:bg-gray-100 hover:text-gray-800"
                         )}
                       >
@@ -337,7 +339,7 @@ export function Sidebar({
                     {/* 菜单弹窗 */}
                     {menuOpenArticleId === article.id && (
                       <div className={clsx(
-                        "absolute top-0 right-0 mt-16 mr-2 w-48 rounded-lg shadow-lg z-50 transition-all duration-200",
+                        "absolute top-0 right-0 mt-16 mr-2 w-48 rounded-lg shadow-lg z-50",
                         isDark ? "bg-[#2d2d2d] border border-gray-700" : "bg-white border border-gray-200"
                       )}>
                         <div className="py-1">
@@ -390,7 +392,7 @@ export function Sidebar({
       {deleteModalOpen && articleToDelete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className={clsx(
-            "w-80 rounded-lg shadow-lg p-6 transition-all duration-200",
+            "w-80 rounded-lg shadow-lg p-6",
             isDark ? "bg-[#2d2d2d] border border-gray-700" : "bg-white"
           )}>
             <h3 className={clsx(

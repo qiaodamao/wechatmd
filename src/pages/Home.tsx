@@ -71,7 +71,17 @@ export default function Home() {
     const savedArticles = loadArticles();
     return savedArticles.length > 0 ? savedArticles[0].id : createArticle().id;
   });
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(() => {
+    const saved = localStorage.getItem('sidebar-collapsed');
+    if (saved !== null) return saved === 'true';
+    // 无记忆状态时按屏宽默认：中屏（<1024px）折叠，大屏（≥1024px）展开
+    return window.innerWidth < 1024;
+  });
+
+  // 持久化侧边栏折叠状态，刷新后保持
+  useEffect(() => {
+    localStorage.setItem('sidebar-collapsed', String(sidebarCollapsed));
+  }, [sidebarCollapsed]);
 
   useEffect(() => {
     if (articles.length === 0) {
